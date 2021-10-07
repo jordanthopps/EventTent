@@ -1,0 +1,69 @@
+:root {
+    --primary-color: #001e43;
+    --secondary-color: #FCE38A;
+    --dark-color: #292929;
+    --white-color: #dfe3e4;
+}
+
+body {
+    color: var(--dark-color);
+}
+
+main>.container {
+    padding: 60px 15px 0;
+}
+
+/*controlling the height of ...? 11:07 AM*/
+
+#content {
+    min-height: 90vh;
+}
+
+/*vh is view height. In this case, we set it to 90%*/
+
+nav {
+    background-color: var(--dark-color);
+}
+
+.footer {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+}
+
+footer .social>a {
+    color: var(--white-color);
+}
+
+footer .social>a:hover {
+    opacity: .9;
+    color: var(--secondary-color);
+}
+
+.jsicon {
+    color: rgb(247, 223, 30)
+}
+
+/*Color correct this with the website*/
+.bsicon {
+    color: #553C7B;
+}
+
+.html5icon {
+    color: orangered;
+}
+
+.css3icon {
+    color: blue;
+}
+
+.checklist>li i {
+    color: var(--secondary-color);
+
+}
+
+.sticky-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
