@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>Event Attendance: Coding Challenge by Jordan Hopps</title>
+    <title>Event Tent: Coding Challenge by Jordan Hopps</title>
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +27,7 @@
         <div class="container-fluid">
             <!--Change the app name when it's cloned. In the img tag, add your logo. Also, set the height and with of the favicon (it's trial and error)
             call width= and height= within the img tag. Try around 24 tall and 30 width and adjust from there; to align, class="d-inline-block (read about this) align-text-top"-->
-            <a class="navbar-brand" href="/index.html"><img src="">APP Name</a> <button class="navbar-toggler"
+            <a class="navbar-brand" href="/index.html"><img src="">Event Tent</a> <button class="navbar-toggler"
                 type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,10 +44,7 @@
                         <a class="nav-link active" aria-current="page" href="/code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">The Repo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">About</a>
+                        <a class="nav-link" href="https://github.com/jordanthopps/EventTent" target="_blank">The Repo</a>
                     </li>
                 </ul>
             </div>
@@ -61,32 +58,74 @@
         <div class="container col-xxl-8 px-4 py-5 mt-5">
             <h1 class="border-bottom border-dark border-1">The Code</h1>
             <div class="row">
-                <div class="col-lg-8 col-sm-12">
+                <div class=" col-sm-12">
                     <pre class="line-numbers"><code class="language-js">
-                        function displayMessage() {
-                            let msg = ""
-                        
-                            msg = document.getElementById("message").value;
-                        
-                            alert(msg);
-                        }
-                        
-                        function displayMessage2() {
-                            let msg = "";
-                        
-                            msg = document.getElementById("message").value;
-                        
-                            Swal.fire(msg);
-                        
-                        }
+                        //This function will build a dropdown of distinct cities from the above array of objects, "events".
+//Everytime the HTML page loads,  the dropdown rebuilds based on step four.
+function buildDropDown() {
+
+    //Step 1
+    let eventDD = document.getElementById("eventDropDown"); //The unordered list within app.html contains the id = eventDropDown.
+    //We are initializing the variable eventDD to what the user selects from the dropdown menu.
+
+    //Step 2
+    //clears out the dropdown menu after the user makes a selection.
+    //For example, clicking "New York" returns "Make a Selection"
+    eventDD.innerHTML = "";
+
+    //Step 3 (11:09)
+    //Get the city dropdown template we are writing to from app.html and initialize it to a variable.
+    let ddTemplate = document.getElementById("cityDD-template");
+    //In app.html, there's a city dropdown template created at the bottom of the file that contains a listed item with the id of cityDD-template.
+    //We are pulling that city dropdown template into this JavaScript file and initializing it to the variable ddTemplate.
+
+    //Step 4 (11:10)
+    let currentEvents = JSON.parse(localStorage.getItem("eventData")) || events;; //should this say eventData-template?
+    /*What this line of code says is: pull in the local storage with id "eventData 
+    or just use the initial array of objects 'events' if no local storage is found.*/
+
+    //Step 5
+    //get unique values from the array
+    let distinctEvents = [...new Set(currentEvents.map((event) => event.city))];
+    //This loops over the entire currentEvents array and looking for unique values attached to events**.city.
+    //Creates a new array of just cities without any repeat cities in it.
+
+    //Step 6
+    let ddItemNode = document.importNode(ddTemplate.content, true);
+    //  ddItemNode is importing the city dropdown li template, which is assigned to the variable ddTemplate (Step 3), and making a copy of it.
+    /* what does importNode method do? Instead of writing over a line of code in HTML (called "writing in place")
+    importNode takes a copy of the HTML code that's passed to it and changes the copy. That copy is appended to the page.
+    .content says go down a level inside the template tag and only make a copy of the nested tag. In this case, <li>...</li>*/
+    //  ddItemNode = <li><a class="dropdown-item" onclick="getEvent(this)"></a></li>
+
+    //Step 7
+    let ddItem = ddItemNode.querySelector("a");
+    //What a query selector does is look in the html it was passed and returns the first occurrence of an <a> tag in any document.
+    //In this case, we passed an 'a' tag to the query selector.
+    //So what ddItem does is pull <a class="dropdown-item" onclick="getEvent(this)"></a>
+    //from ddItemNode in (step 6).
+
+    ddItem.setAttribute("data-string", "All");
+    //(Step 8) <a class="dropdown-item" data-string="All" onclick="getEvent(this)"></a>
+
+    ddItem.textContent = "All";
+    //This is giving us a selection so that ... (10:53)
+    //(Step 9) <a class="dropdown-item" data-string="All" onclick="getEvent(this)">All</a>
+    //This actually writes "All" to the dropdown menu because 'All' is not in the array of objects.
+
+    eventDD.appendChild(ddItemNode);
+    //this writes to the <ul></ul> tag in the app.html page because the id "eventDropDown" matches.
+    /*Note: the reason why ddItemNode was appended back to eventDD is because ddItem is just a piece 
+    of ddItemNode. The changes made to ddItem are carried over into ddItemNode. It's one big object.*/
+
                     </code>
                     </pre>
                 </div>
-                <div class="col-lg-4 col-sm-12">
+                <!-- <div class="col-lg-4 col-sm-12">
                     <p>The code is structured in one function.</p>
                     <h5>getValues</h5>
                     <p>Prints out your message!</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
@@ -98,7 +137,7 @@
                 <div
                     class="col d-flex order-last order-lg-first align-items-center justify-content-center justify-content-lg-start">
                     <div>
-                        <span class="text-muted">&copy2021</span> Jordan Hopps | jordanthopps@outlook.com
+                        <span class="text-muted">&copy2021</span> Jordan Hopps | dev.jordanhopps@gmail.com
                     </div>
                 </div>
                 <div class="col d-flex align-items-center justify-content-center justify-content-lg-center">
@@ -108,7 +147,6 @@
                     <div class="row">
                         <div class="col social"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></div>
                         <div class="col social"><a href="#"><i class="fab fa-github fa-2x"></i></a></div>
-                        <div class="col social"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></div>
                     </div>
                 </div>
             </div>
