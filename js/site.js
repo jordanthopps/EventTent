@@ -63,8 +63,6 @@ let events = [{
     }
 ]
 
-//GO TO 11:05 AM to get a top to bottom overview.
-
 //This function will build a dropdown of distinct cities from the above array of objects, "events".
 //Everytime the HTML page loads,  the dropdown rebuilds based on step four.
 function buildDropDown() {
